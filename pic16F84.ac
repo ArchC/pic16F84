@@ -1,0 +1,22 @@
+/********************************************************
+ * The ArchC PIC 16F84 functional model.                *
+ *                                                      *
+ * Author:                                              *
+ * Gabriel Renaldo Laureano - laureano@inf.ufsc.br      *
+ * Leonardo Taglietti       - leonardo@inf.ufsc.br      *
+ *                                                      *
+ * For more information on ArchC, please visit:         *
+ * http://www.archc.org                                 *
+ *******************************************************/
+
+AC_ARCH(pic16F84){
+    ac_mem MEM:5M;
+    ac_regbank BANK:256;
+    ac_wordsize 8;
+    ac_reg W;
+
+    ARCH_CTOR(pic16F84) {
+        ac_isa("pic16F84_isa.ac");
+        set_endian("big");
+    };
+};

@@ -1,0 +1,158 @@
+ /*******************************************************
+ * The ArchC PIC 16F84 functional model.                *
+ *                                                      *
+ * Author:                                              *
+ * Gabriel Renaldo Laureano - laureano@inf.ufsc.br      *
+ * Leonardo Taglietti       - leonardo@inf.ufsc.br      *
+ *                                                      *
+ * For more information on ArchC, please visit:         *
+ * http://www.archc.org                                 *
+ *******************************************************/
+
+/*
+NOTE 1: We consider an instruction word to be 8 bits, and so the PC is increased by 2 instead of 1.
+        Instruction addresses are multipled by 2. We had to add 2 dummy bits at the begin of 
+        each instruction in order to make it 16 bits instead of 14 bits (the real instruction's size
+        of the PIC)
+
+NOTE 2: For Literal and Control operations, we replaced "don't care's" for "zeros" in order to
+        keep instruction formats as simple as possible.
+*/
+
+
+AC_ISA(pic16F84){
+
+    //Format Declarations-----------------------------------------------------------------------------
+    ac_format Format_Byte = "%dummy:2 %opbyte:6 %d:1 %f:7";
+    ac_format Format_Bit = "%dummy:2 %opbit:4 %b:3 %f:7";
+    ac_format Format_Literal = "%dummy:2 %oplit:6 %k:8";
+    ac_format Format_Control = "%dummy:2 %opctrl:3 %kaddress:11";
+    //------------------------------------------------------------------------------------------------
+
+    //Associations of Formats with instructions-------------------------------------------------------
+    ac_instr<Format_Byte>   CLRWDT, CLRW,CLRF,ADDWF,MOVWF,ANDWF,DECF,INCF,MOVF,NOP,IORWF,SUBWF,XORWF,COMF,DECFSZ,INCFSZ,RLF,RRF,SWAPF,RETURN,RETFIE,SLEEP;
+    ac_instr<Format_Bit> BCF, BSF, BTFSC, BTFSS;
+    ac_instr<Format_Literal > MOVLW,ANDLW,IORLW,XORLW, ADDLW, SUBLW, RETLW;
+    ac_instr<Format_Control> GOTO, CALL;
+    //------------------------------------------------------------------------------------------------
+
+    //Assembly and Decoder--------------------------------------------------------------
+    ISA_CTOR(pic16F84){
+                       
+	    //Byte-Oriented File Register Operations---------------------------------------------------------
+	    ADDWF.set_asm("ADDWF %f, %d");
+	    ADDWF.set_decoder(opbyte=0x07);
+	
+	    ANDWF.set_asm("ANDWF %f, %d");
+	    ANDWF.set_decoder(opbyte=0x05);
+	
+	    CLRF.set_asm("CLRF %f");
+	    CLRF.set_decoder(opbyte=0x01, d=1);
+	
+	    CLRW.set_asm("CLRW");
+	    CLRW.set_decoder(opbyte=0x01, d=0);
+	
+	    COMF.set_asm("COMF %f, %d");
+	    COMF.set_decoder(opbyte=0x09);
+	
+	    DECF.set_asm("DECF %f, %d");
+	    DECF.set_decoder(opbyte=0x03);
+	
+	    DECFSZ.set_asm("DECFSZ %f, %d");
+	    DECFSZ.set_decoder(opbyte=0x0B);
+	
+	    INCF.set_asm("INCF %f, %d");
+	    INCF.set_decoder(opbyte=0x0A);
+	
+	    INCFSZ.set_asm("INCFSZ %f, %d");
+	    INCFSZ.set_decoder(opbyte=0x0F);
+	
+	    IORWF.set_asm("IORWF %f, %d");
+	    IORWF.set_decoder(opbyte=0x04);
+	
+	    MOVF.set_asm("MOVF %f, %d");
+	    MOVF.set_decoder(opbyte=0x08);
+	
+	    MOVWF.set_asm("MOVWF %f");
+	    MOVWF.set_decoder(opbyte=0x00, d=1);
+	
+	    NOP.set_asm("NOP");
+	    NOP.set_decoder(opbyte=0x00, d=0, f=0x00);
+	
+	    RLF.set_asm("RLF %f, %d");
+	    RLF.set_decoder(opbyte=0x0D);
+	
+	    RRF.set_asm("RRF %f, %d");
+	    RRF.set_decoder(opbyte=0x0C);
+	
+	    SUBWF.set_asm("SUBWF %f, %d");
+	    SUBWF.set_decoder(opbyte=0x02);
+	
+	    SWAPF.set_asm("SWAPF %f, %d");
+	    SWAPF.set_decoder(opbyte=0x0E);
+	
+	    XORWF.set_asm("XORWF %f, %d");
+	    XORWF.set_decoder(opbyte=0x06);
+	    //-------------------------------------------------------------------------------------------------------------
+	
+	    //Bit-Oriented File Register Operations---------------------------------------------------------------
+	    BCF.set_asm("BCF %f, %b");
+	    BCF.set_decoder(opbit=0x04);
+	
+	    BSF.set_asm("BSF %f, %b");
+	    BSF.set_decoder(opbit=0x05);
+	
+	    BTFSC.set_asm("BTFSC %f, %b");
+	    BTFSC.set_decoder(opbit=0x06);
+	
+	    BTFSS.set_asm("BTFSS %f, %b");
+	    BTFSS.set_decoder(opbit=0x07);
+	    //----------------------------------------------------------------------------------------------------
+	
+	
+	    //Literal Operations----------------------------------------------------------------------------------
+	    ADDLW.set_asm("ADDLW %k");
+	    ADDLW.set_decoder(oplit=0x3E);
+	
+	    ANDLW.set_asm("ANDLW %k");
+	    ANDLW.set_decoder(oplit=0x39);
+	
+	    //colocada no formato Byte
+	    CLRWDT.set_asm("CLRWDT");
+	    CLRWDT.set_decoder(opbyte=0x00, d=0, f=0x64);
+	
+	    IORLW.set_asm("IORLW %k");
+	    IORLW.set_decoder(oplit=0x38);
+	
+	    MOVLW.set_asm("MOVLW %k");
+	    MOVLW.set_decoder(oplit=0x30);
+	
+	    SUBLW.set_asm("SUBLW %k");
+	    SUBLW.set_decoder(oplit=0x3C);
+	
+	    XORLW.set_asm("XORLW %k");
+	    XORLW.set_decoder(oplit=0x3A);
+	
+	    RETLW.set_asm("RETLW %k");
+	    RETLW.set_decoder(oplit=0x34);
+	    //--------------------------------------------------------------------------------------------
+	
+	
+	    //Control Operations--------------------------------------------------------------------------
+	    CALL.set_asm("CALL %kaddress");
+	    CALL.set_decoder(opctrl=0x04);
+	
+	    GOTO.set_asm("GOTO %kaddress");
+	    GOTO.set_decoder(opctrl=0x05);
+	
+	    RETFIE.set_asm("RETFIE");
+	    RETFIE.set_decoder(opbyte=0x0, d=0, f=0x09);
+	
+	    RETURN.set_asm("RETURN");
+	    RETURN.set_decoder(opbyte=0x00, d=0, f=0x08);
+	
+	    SLEEP.set_asm("SLEEP");
+	    SLEEP.set_decoder(opbyte=0x0, d=0, f=0x63);
+	    //-------------------------------------------------------------------------------------------
+    };
+};
