@@ -1,13 +1,20 @@
- /*******************************************************
- * The ArchC PIC 16F84 functional model.                *
- *                                                      *
- * Author:                                              *
- * Gabriel Renaldo Laureano - laureano@inf.ufsc.br      *
- * Leonardo Taglietti       - leonardo@inf.ufsc.br      *
- *                                                      *
- * For more information on ArchC, please visit:         *
- * http://www.archc.org                                 *
- *******************************************************/
+/**
+ * @file      constants.h
+ * @author    Gabriel Renaldo Laureano - laureano@inf.ufsc.br
+ *            Leonardo Taglietti       - leonardo@inf.ufsc.br
+ *
+ *            The ArchC Team
+ *            http://www.archc.org/
+ *
+ *
+ * @version   version?
+ * @date      Mon, 19 Jun 2006 15:33:28 -0300
+ * 
+ * @brief     The ArchC PIC 16F84 functional model.
+ * 
+ * @attention Copyright (C) 2002-2006 --- The ArchC Team
+ *
+ */
 
 #ifndef CONSTANTS_H
 #define CONSTANTS_H

@@ -1,13 +1,20 @@
- /*******************************************************
- * The ArchC PIC 16F84 functional model.                *
- *                                                      *
- * Author:                                              *
- * Gabriel Renaldo Laureano - laureano@inf.ufsc.br      *
- * Leonardo Taglietti       - leonardo@inf.ufsc.br      *
- *                                                      *
- * For more information on ArchC, please visit:         *
- * http://www.archc.org                                 *
- *******************************************************/
+/**
+ * @file      file?
+ * @author    Gabriel Renaldo Laureano - laureano@inf.ufsc.br
+ *            Leonardo Taglietti       - leonardo@inf.ufsc.br
+ *
+ *            The ArchC Team
+ *            http://www.archc.org/
+ *
+ *
+ * @version   version?
+ * @date      date?
+ * 
+ * @brief     The ArchC PIC 16F84 functional model.
+ * 
+ * @attention Copyright (C) 2002-2006 --- The ArchC Team
+ *
+ */
 
 /*
 NOTE 1: We consider an instruction word to be 8 bits, and so the PC is increased by 2 instead of 1.
