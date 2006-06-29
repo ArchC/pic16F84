@@ -1,5 +1,5 @@
 /**
- * @file      file?
+ * @file      pic16F84.ac
  * @author    Gabriel Renaldo Laureano - laureano@inf.ufsc.br
  *            Leonardo Taglietti       - leonardo@inf.ufsc.br
  *
@@ -7,8 +7,8 @@
  *            http://www.archc.org/
  *
  *
- * @version   version?
- * @date      date?
+ * @version   1.0
+ * @date      Thu, 29 Jun 2006 14:49:06 -0300
  * 
  * @brief     The ArchC PIC 16F84 functional model.
  * 
