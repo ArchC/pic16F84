@@ -1,0 +1,24 @@
+
+ac_modifier_encode(align)
+{
+  if (!strcmp(reloc->section, ".bss"))
+    reloc->output = reloc->input;
+  else
+    reloc->output = reloc->input >> 1;
+}
+
+
+ac_modifier_decode(align)
+{
+  reloc->output = reloc->input;
+}
+
+
+ac_modifier_encode(high)
+{
+  reloc->Format_Literal.k = reloc->input >> 9;
+}
+
+ac_modifier_decode(high)
+{
+}
