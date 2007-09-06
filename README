@@ -23,5 +23,15 @@ limitation of ArchC's current version), while the real word size is 14 bits. To
 run a program in this model, it is necessary to add two dummy 0 (zero) bits at
 the left of the actual 14-bit instruction representation.
 
+
+
+CHANGELOG:
+==========
+
+version 0.3.2
+
+. ArchC 2.0 compliant
+
+
 For more information run acsim --help or visit
 http://www.archc.org
